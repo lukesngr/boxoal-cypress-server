@@ -1,4 +1,4 @@
-describe('normal functions test', () => {
+describe('creation functions test', () => {
 
   beforeEach(function () {
     cy.loginByCognitoApi(
@@ -7,12 +7,12 @@ describe('normal functions test', () => {
     )
   })
 
-  /*it('test schedule creation', () => {
+  it('test schedule creation', () => {
     cy.visit('http://localhost:3000/myschedules');
     cy.get('.openCreateScheduleForm').click();
     cy.get('.createScheduleTitle').type('type')
     cy.get('.createScheduleButton').click();
-    cy.get('.errorAlert').should('not.exist');
+    cy.get('.errorAlert').contains('Created schedule!');
   })
 
   it('test timebox creation when goal not there', () => {
@@ -49,12 +49,14 @@ describe('normal functions test', () => {
   })
 
   it('test goal creation', () => {
+    cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
     cy.visit('http://localhost:3000/myschedules');
+    cy.wait('@getSchedules');
     cy.get('.openCreateGoalForm').click();
     cy.get('.createGoalTitle').type('test');
     cy.get('.createGoalButton').click();
     cy.get('.errorAlert').contains('Created goal!');
-  })*/
+  })
 
   it('test goal creation limit locking', () => {
     cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
@@ -138,11 +140,10 @@ describe('normal functions test', () => {
   it('test add tree to goal ', () => {
     cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
     cy.visit('http://localhost:3000/myschedules');
-
-    cy.visit('http://localhost:3000/myschedules');
+    cy.wait('@getSchedules');
     cy.get('.openSkillTree').click();
     cy.get('.addGoalToTree').click();
-    cy.get('.createGoalTitle').type('test');
+    cy.get('.createGoalTitle').type('next');
     cy.get('.createGoalButton').click();
     cy.get('.errorAlert').contains('Created goal!');
   })

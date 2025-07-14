@@ -7,7 +7,7 @@ describe('normal functions test', () => {
     )
   })
 
-  it('delete timebox ', () => {
+  it('delete timebox test', () => {
     cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
     cy.visit('http://localhost:3000/myschedules');
 
@@ -36,27 +36,25 @@ describe('normal functions test', () => {
     cy.get(`[class="${hours+':30'}${date+'/'+month}TimeboxActionsForm"]`).click();
     cy.get('.editTimebox').click();
     cy.get('.deleteTimebox').click();
-    cy.get('.errorAlert').contains('Updated timebox!');
+    cy.get('.errorAlert').contains('Deleted timebox!');
   })
 
-  it('test schedule update', () => {
-    cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
-    cy.visit('http://localhost:3000/myschedules');
-    cy.wait('@getSchedules');
-    cy.get('.updateScheduleFormOpen').click();
-    cy.get('.updateScheduleTitle').type('test')
-    cy.get('.updateScheduleButton').click();
-    cy.get('.errorAlert').contains('Updated schedule!');
-  })
-
-  it('test goal update', () => {
+  it('delete goal test', () => {
     cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
     cy.visit('http://localhost:3000/myschedules');
     cy.wait('@getSchedules');
     cy.get('.openUpdateGoalButton').click();
-    cy.get('.updateGoalTitle').type('test')
-    cy.get('.updateGoalButton').click();
-    cy.get('.errorAlert').contains('Updated goal!');
+    cy.get('.deleteGoal').click();
+    cy.get('.errorAlert').contains('Deleted goal!');
+  })
+
+  it('test schedule delete', () => {
+    cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
+    cy.visit('http://localhost:3000/myschedules');
+    cy.wait('@getSchedules');
+    cy.get('.updateScheduleFormOpen').click();
+    cy.get('.deleteScheduleButton').click();
+    cy.get('.errorAlert').contains('Deleted schedule!');
   })
 
   
