@@ -130,8 +130,20 @@ describe('normal functions test', () => {
     cy.get('.recordButton').click();
     cy.get('.stopRecordButton').click();
     cy.get('.errorAlert').contains('Completed timebox!');
-
+    cy.get('.errorCloseButton').click();
     cy.get('.clearRecording').click();
     cy.get('.errorAlert').contains('Cleared recording!');
+  })
+
+  it('test add tree to goal ', () => {
+    cy.intercept('GET', '**/api/getSchedules*').as('getSchedules');
+    cy.visit('http://localhost:3000/myschedules');
+
+    cy.visit('http://localhost:3000/myschedules');
+    cy.get('.openSkillTree').click();
+    cy.get('.addGoalToTree').click();
+    cy.get('.createGoalTitle').type('test');
+    cy.get('.createGoalButton').click();
+    cy.get('.errorAlert').contains('Created goal!');
   })
 })
